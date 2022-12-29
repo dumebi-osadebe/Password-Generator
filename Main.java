@@ -7,12 +7,24 @@ public class Main{
     static Scanner scan = new Scanner(System.in);
     static Random random = new Random();
     public static void main(String[] args){
-           
-        String[] requirements = getRequirements();
-        String password = generator(requirements[0], requirements[1], requirements[2]);
-        System.out.println("The generated password is: " + password);
         
+        System.out.println("Enter menu option (enter 1 or 2): ");
+        System.out.println("1 - check my password strength");
+        System.out.println("2 - generate password and check its strength");
+        String option = scan.nextLine();
+
+        if(option.equals("1")){
+            System.out.println("Enter your password:");
+            String givenPassword = scan.nextLine();
+            strengthChecker(givenPassword);
+        } else if (option.equals("2")){
+            String[] requirements = getRequirements();
+            String password = generator(requirements[0], requirements[1], requirements[2]);
+            System.out.println("The generated password is: " + password);
+            strengthChecker(password);
+        } 
     }
+
 
     public static String[] getRequirements() {
         
@@ -116,6 +128,68 @@ public class Main{
             password.append(lettNum.charAt(random.nextInt(lettNum.length())));
         } 
 
+        
         return password.toString();
+    }
+
+    public static void strengthChecker(String password) {
+        
+        int score = 0;
+        char ch;
+        boolean isOverEight = false;
+        boolean hasUpperCase = false;
+        boolean hasLowerCase = false;
+        boolean hasNumber = false;
+        boolean hasSymbol = false;
+
+        if(password.length() >= 8){
+            isOverEight = true;
+        }
+
+        if(password.matches("!@#$%^&*()_-")){
+            hasSymbol = true;
+        }
+
+        for(int i=0; i<password.length(); i++){
+            ch = password.charAt(i);
+
+            if(Character.isUpperCase(ch)){
+                hasUpperCase = true;
+            } else if(Character.isLowerCase(ch)){
+                hasLowerCase = true;
+            } else if(Character.isDigit(ch)){
+                hasNumber = true;
+            } 
+
+        }
+        // compute a score for the password based on its contents
+        if(isOverEight){
+            score+= 2;
+        }
+
+        if(hasUpperCase){
+            score+= 2;
+        }
+
+        if(hasLowerCase){
+            score+= 2;
+        }
+
+        if(hasNumber){
+            score+= 2;
+        }
+
+        if(hasSymbol){
+            score+= 2;
+        }
+
+
+        if(score <= 4){
+            System.out.println("\nThe strength of your password is: weak");
+        } else if(score > 4 && score < 7){
+            System.out.println("The strength of your password is: medium");
+        } else if(score > 7){
+            System.out.println("The strength of your password is: good");
+        }
     }
 }
