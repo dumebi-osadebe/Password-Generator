@@ -11,6 +11,7 @@ public class Main{
            
         String[] requirements = getRequirements();
         String password = generator(requirements[0], requirements[1], requirements[2]);
+        System.out.println("The generated password is:" + password);
         
     }
 
@@ -31,7 +32,6 @@ public class Main{
             System.out.println("\nChoose capitalization from options below (enter A, B or C):");
             System.out.println(" A. All Uppercase \n B. All Lowercase \n C. Uppercase and Lowercase");
             capitalization = scan.nextLine();
-            System.out.println("Username is: " + capitalization);
 
         }
         
@@ -46,35 +46,45 @@ public class Main{
         ArrayList<Integer> randomNums = new ArrayList<>();
         ArrayList<Character> randomVars = new ArrayList<>();
         int upperbound = 9;
-        String password = "no";
-
-        //char data[] = {'a', 'b', 'c'};
-        //String str = new String(data);
+        String password = "none";
 
         for(int i = 0; i < length; i++){
 
-            // generate only e=random numbers for the password as requested by user input
+            // generate only random numbers for the password as requested by user input
             if(alphNum.equals("B")){
                 int int_random = random.nextInt(upperbound);
                 randomNums.add(int_random);
-
+                
+            // generate only random characters (only uppercase or only lowercase) for the password as requested by user input
             } else if(alphNum.equals("A") && capitalization.equals("A")) {
                 char alphabet = (char)(random.nextInt(26) + 'A');
                 randomVars.add(alphabet);
-                System.out.println(randomVars.get(0));
 
             }   else if(alphNum.equals("A") && capitalization.equals("B")) {
                 char alphabet = (char)(random.nextInt(26) + 'a');
                 randomVars.add(alphabet);
-                System.out.println(randomVars.get(0));
 
-            }
+            } 
+        }
 
-    
+
+        if(alphNum.equals("C")){
+            return letterAndNumber(length);
         }
 
         return password;
 
     }
 
+    public static String letterAndNumber(int length) {
+        
+        String lettNum = "0123456789" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz";
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            password.append(lettNum.charAt(random.nextInt(lettNum.length())));
+        } 
+
+        return password.toString();
+    }
 }
