@@ -1,7 +1,6 @@
 
 import java.util.Scanner;
 import java.util.Random;
-import java.util.ArrayList;
 
 public class Main{
     
@@ -11,7 +10,7 @@ public class Main{
            
         String[] requirements = getRequirements();
         String password = generator(requirements[0], requirements[1], requirements[2]);
-        System.out.println("The generated password is:" + password);
+        System.out.println("The generated password is: " + password);
         
     }
 
@@ -19,12 +18,30 @@ public class Main{
         
         String capitalization = "N";
         
+        // request length of password
         System.out.println("Length of password:");
         String passLength = scan.nextLine();
+        // check valid length of desired password
+        int passLengthInt = Integer.parseInt(passLength);
+        while(passLengthInt < 4 || passLengthInt > 15){
+            System.out.println("Recommended password length is between 4 and 15");
+            System.out.println("Length of password:");
+            passLength = scan.nextLine();
+            passLengthInt = Integer.parseInt(passLength);
+        }
+        passLength = Integer.toString(passLengthInt);
         
+        //request password type
         System.out.println("\nChoose from options below (enter A, B or C):");
         System.out.println(" A. Only Letters \n B. Only Numbers \n C. Letters and Numbers");
         String alphNum = scan.nextLine();
+        //check validity of password type entered
+        while(!(alphNum.equals("A") || alphNum.equals("B") || alphNum.equals("C"))){
+            System.out.println("\nEnter either A, B or C");
+            System.out.println("\nChoose from options below:");
+            System.out.println(" A. Only Letters \n B. Only Numbers \n C. Letters and Numbers");
+            alphNum = scan.nextLine();
+        }
 
         // ask users for capitalization only if they have specified that they want more than numbers in their password
         if(alphNum.equals("A")|| alphNum.equals("C")){
@@ -32,8 +49,16 @@ public class Main{
             System.out.println("\nChoose capitalization from options below (enter A, B or C):");
             System.out.println(" A. All Uppercase \n B. All Lowercase \n C. Uppercase and Lowercase");
             capitalization = scan.nextLine();
+            //check validity of capitalization entered
+            while(!(capitalization.equals("A") || capitalization.equals("B") || capitalization.equals("C"))){
+                System.out.println("\nEnter either A, B or C");
+                System.out.println("\nChoose capitalization from options below:");
+                System.out.println(" A. All Uppercase \n B. All Lowercase \n C. Uppercase and Lowercase");
+                capitalization = scan.nextLine();
+            }
 
         }
+
         
         String[] arr = {passLength, alphNum, capitalization};
         return arr;
