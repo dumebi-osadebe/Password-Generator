@@ -69,7 +69,15 @@ public class Main{
 
 
         if(alphNum.equals("C")){
-            return letterAndNumber(length);
+
+            if(capitalization.equals("A")){
+                return letterAndNumber(length).toUpperCase();
+            } else if (capitalization.equals("B")) {
+                return letterAndNumber(length).toLowerCase();
+            } else {
+                return letterAndNumber(length);
+            }
+            
         }
 
         return password;
