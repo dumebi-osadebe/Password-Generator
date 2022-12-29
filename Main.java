@@ -43,31 +43,29 @@ public class Main{
     public static String generator(String passLength, String alphNum, String capitalization){
 
         int length = Integer.parseInt(passLength);
-        ArrayList<Integer> randomNums = new ArrayList<>();
-        ArrayList<Character> randomVars = new ArrayList<>();
+        StringBuilder passwordList = new StringBuilder();
         int upperbound = 9;
-        String password = "none";
 
         for(int i = 0; i < length; i++){
 
             // generate only random numbers for the password as requested by user input
             if(alphNum.equals("B")){
                 int int_random = random.nextInt(upperbound);
-                randomNums.add(int_random);
+                passwordList.append(Integer.toString(int_random));
                 
             // generate only random characters (only uppercase or only lowercase) for the password as requested by user input
             } else if(alphNum.equals("A") && capitalization.equals("A")) {
                 char alphabet = (char)(random.nextInt(26) + 'A');
-                randomVars.add(alphabet);
+                passwordList.append(alphabet);
 
             }   else if(alphNum.equals("A") && capitalization.equals("B")) {
                 char alphabet = (char)(random.nextInt(26) + 'a');
-                randomVars.add(alphabet);
+                passwordList.append(alphabet);
 
             } 
         }
 
-
+        // seperate handler for the alphanumeric password requests
         if(alphNum.equals("C")){
 
             if(capitalization.equals("A")){
@@ -80,7 +78,7 @@ public class Main{
             
         }
 
-        return password;
+        return passwordList.toString();
 
     }
 
